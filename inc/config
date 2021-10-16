@@ -1,0 +1,43 @@
+readonly ACTION_OK="\033[0;32mPassed\033[0m"
+readonly ACTION_KO="\033[0;31mFailed\033[0m"
+
+# Environment="JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64"
+
+#Install
+KAFKA_VERSION="2.7.1"
+TMP_DOWNLOAD_KAFKA_TMP_DIR="/tmp/kafka-${KAFKA_VERSION}.tgz"
+KAFKA_INSTALL_DIR="/usr/local/kafka-server"
+KAFKA_URL="https://downloads.apache.org/kafka/2.7.1/kafka_2.13-2.7.1.tgz"
+
+#ZOOKEEPER SERVICE
+ZOOKEEPER_SERVICE_NAME="zookeeper"
+ZOOKEEPER_SERVICE_FILE_NAME="/etc/systemd/system/${ZOOKEEPER_SERVICE_NAME}.service"
+ZOOKEEPER_SERVICE_DESCRIPTION="Apache Zookeeper Server"
+ZOOKEEPER_SERVICE_REQUIRES="network.target remote-fs.target"
+ZOOKEEPER_SERVICE_AFTER="network.target remote-fs.target"
+ZOOKEEPER_SERVICE_EXE_START=""${KAFKA_INSTALL_DIR}"/bin/zookeeper-server-start.sh "${KAFKA_INSTALL_DIR}"/config/zookeeper.properties"
+ZOOKEEPER_SERVICE_EXE_STOP=""${KAFKA_INSTALL_DIR}"/bin/zookeeper-server-stop.sh"
+
+#KAFKA SERVICE
+KAFKA_SERVICE_NAME="kafka"
+KAFKA_SERVICE_FILE_NAME="/etc/systemd/system/${KAFKA_SERVICE_NAME}.service"
+KAFKA_SERVICE_DESCRIPTION="Apache Kafka Server"
+KAFKA_SERVICE_REQUIRES="zookeeper.service"
+KAFKA_SERVICE_AFTER="zookeeper.service"
+KAFKA_SERVICE_EXE_START=""${KAFKA_INSTALL_DIR}"/bin/kafka-server-start.sh "${KAFKA_INSTALL_DIR}"/config/server.properties"
+KAFKA_SERVICE_EXE_STOP=""${KAFKA_INSTALL_DIR}"/bin/kafka-server-stop.sh"
+
+
+log()
+{
+  EVENT_STATUT=$1
+  EVENT=$2
+  
+  echo -e "[${EVENT_STATUT}] Action: ${EVENT}"
+  if [[ "${EVENT_STATUT}" == "${ACTION_KO}" ]]
+  then
+    echo "Exit"
+    exit -1
+  fi
+
+}
