@@ -8,6 +8,7 @@ KAFKA_VERSION="2.7.1"
 TMP_DOWNLOAD_KAFKA_TMP_DIR="/tmp/kafka-${KAFKA_VERSION}.tgz"
 KAFKA_INSTALL_DIR="/usr/local/kafka-server"
 KAFKA_URL="https://downloads.apache.org/kafka/2.7.1/kafka_2.13-2.7.1.tgz"
+KAFKA_BIN_DIR="${KAFKA_INSTALL_DIR}/bin"
 
 #ZOOKEEPER SERVICE
 ZOOKEEPER_SERVICE_NAME="zookeeper"
