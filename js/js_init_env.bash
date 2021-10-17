@@ -2,7 +2,7 @@
 
 source ${PWD}/inc/config
 
-apt install npm -y > /dev/null 2>&1
+apt install yarn -y > /dev/null 2>&1
 if [ $? == 0 ]; then
   log "${ACTION_OK}" "Install npm package"
 else
