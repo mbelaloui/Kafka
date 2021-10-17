@@ -9,7 +9,7 @@ else
   log "${ACTION_KO}" "Clean kafkajs lib"
 fi
 
-apt remove npm -y > /dev/null 2>&1
+apt remove yarn -y > /dev/null 2>&1
 if [ $? == 0 ]; then
   log "${ACTION_OK}" "Clean npm package"
 else
